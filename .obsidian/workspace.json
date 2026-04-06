@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b457a8d44decdd50",
+        "id": "c33f0017c95f51cb",
         "type": "tabs",
         "children": [
           {
-            "id": "fa0135d9a1629bd6",
+            "id": "e8760709c48c0a86",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "thm-lofi"
             }
+          },
+          {
+            "id": "33afb3b424bbff22",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "THM/thm-blue.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "thm-blue"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -165,12 +180,23 @@
               "icon": "lucide-list",
               "title": "Outline of thm-lofi"
             }
+          },
+          {
+            "id": "811a004f395cec89",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
@@ -181,12 +207,15 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fa0135d9a1629bd6",
+  "active": "33afb3b424bbff22",
   "lastOpenFiles": [
+    "THM/thm-lofi.md",
+    "THM/thm-blue.md",
     "HTB/htb-footprinting.md",
-    "THM/thm-lofi.md"
+    "Untitled.base"
   ]
 }
