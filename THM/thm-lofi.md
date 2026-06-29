@@ -1,8 +1,8 @@
 
 # CTF Room: Lofi
-**Platform:** [THM](https://tryhackme.com/room/lofi)
-**Difficulty:** Easy
-**Category:** Web (LFI)
+- [Link to room](https://tryhackme.com/room/lofi)
+- **Difficulty:** Easy
+- **Category:** Web (LFI)
 
 ## 1. Brief
 Want to hear some lo-fi beats, to relax or study to? We've got you covered!

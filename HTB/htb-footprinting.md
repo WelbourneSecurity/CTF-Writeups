@@ -1,8 +1,8 @@
 
-# CTF Room: Footprinting Lab - Easy
-**Platform:** [HTB](https://academy.hackthebox.com/app/module/112/section/1078)
-**Difficulty:** Easy
-**Category:** Recon
+# CTF Room: Footprinting Lab
+- [Link to room](https://academy.hackthebox.com/app/module/112/section/1078)
+- **Difficulty:** Easy
+- **Category:** Recon
 
 ## 1. Brief
 We were commissioned by the company `Inlanefreight Ltd` to test three different servers in their internal network. The company uses many different services, and the IT security department felt that a penetration test was necessary to gain insight into their overall security posture.

@@ -1,8 +1,8 @@
 
 # CTF Room: Blue
-**Platform:** [THM](https://tryhackme.com/room/blue)
-**Difficulty:** Easy
-**Category:** EternalBlue (CVE)
+- [Link to room](https://tryhackme.com/room/blue)
+- **Difficulty:** Easy
+- **Category:** EternalBlue (CVE)
 
 ## 1. Brief
 Deploy & hack into a Windows machine, leveraging common misconfigurations issues.
@@ -139,12 +139,12 @@ Nmap done: 1 IP address (1 host up) scanned in 19.97 seconds
 So, we know that we need credentials that we currently do not have. We also konw that this machine is using SMBv1. Lets investigate vulnerabilities within SMBv1 on Windows. Elementary my dear Watson, it would appear we have a vulnerability called **EternalBlue**... What is this? 
 
 
-> [!EternalBlue] EternalBlue {MS17-010}
+**EternalBlue {MS17-010}**
 > EternalBlue is a vulnerability exploit developed by the NSA, it was held as a zero-day undisclosed exploit by the NSA until 2017, when the hacking group "Shadow Brokers" released it into the public eye.
-> 
-> The vulnerability (MS17-010) allows attackers to execute arbitrary code on a system by sending custom messages to the SMBv1 server. It was patched following its disclosure but leaves SMBv1 vulnerable. 
-> 
-> An interesting point to note is that if one device is infected via EternalBlue, it puts other devices on the network at risk. A good example of this is the WannaCry ransomware attack against the NHS. 
+>
+> The vulnerability (MS17-010) allows attackers to execute arbitrary code on a system by sending custom messages to the SMBv1 server. It was patched following its disclosure but leaves SMBv1 vulnerable.
+>
+> An interesting point to note is that if one device is infected via EternalBlue, it puts other devices on the network at risk. A good example of this is the WannaCry ransomware attack against the NHS.
 
 #### Task 2: Gaining Access
 Exploit the machine and gain a foothold.
@@ -260,9 +260,9 @@ We should see that the exploit has run and we have gained a shell on the machine
 #### Task 3: Escalate
 Escalate privileges, learn how to upgrade shells in metasploit.
 
-> [!Meterpreter] Meterpreter Shells
-> When using MSF, we can upgrade from a regular shell to a meterpreter shell, this is a native metasploit shell that gives us many more features than a regular shell like being able to quickly deploy kiwi (mimikatz) to escalate to root. 
-> 
+**Meterpreter Shells**
+> When using MSF, we can upgrade from a regular shell to a meterpreter shell, this is a native metasploit shell that gives us many more features than a regular shell like being able to quickly deploy kiwi (mimikatz) to escalate to root.
+>
 > To do this, we can use the package: **post/multi/manage/shell_to_meterpreter**
 
 ```bash  
@@ -327,7 +327,7 @@ migrate 704
 ```
 
 
-> [!meterpreter elevate] Escalation via meterpreter
+**Escalation via meterpreter**
 > Please note, whilst the room shows you how to escalate via the main shell we spawned it is also possible to escalate through other methods in the meterpreter shell. Feel free to do the room again and investigate this, commands like sysinfo and hashdump allow us to grab key system data needed to gain credentials. Once we have said credentials, hashcat can be used to retrieve the plaintext password!
 
 #### Task 4: Cracking
