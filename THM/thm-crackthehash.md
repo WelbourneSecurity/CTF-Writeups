@@ -2,11 +2,10 @@
 title: Crack the Hash
 summary: TryHackMe hash cracking room covering common hashes, CrackStation lookups, and Hashcat modes for bcrypt, SHA-512 crypt, and salted SHA1.
 date: 2026-06-29
+tags: [TryHackMe, Cryptography, Hash Cracking, CrackStation, Hashcat, John the Ripper]
 difficulty: easy
 os: N/A
-tags: [TryHackMe, Cryptography, Hash Cracking, CrackStation, Hashcat, John the Ripper]
 url: https://tryhackme.com/room/crackthehash
-badge: https://tryhackme.com/dashboard?badge=welbournesecurity:hash-cracker
 ---
 
 # CTF Room: Crack the Hash
@@ -23,28 +22,28 @@ For most of these hashes, I used [CrackStation](https://crackstation.net/) first
 ## 2. Level 1
 The first level contains a set of easier hashes that can mostly be cracked with online lookup tools.
 
-#### 48bb6e862e54f2a795ffc4e541caed4d
+#### ||48bb6e862e54f2a795ffc4e541caed4d||
 This hash was cracked using CrackStation.
 
 ### Answer
 ```bash
-easy
+||easy||
 ```
 
-#### CBFDAC6008F9CAB4083784CBD1874F76618D2A97
+#### ||CBFDAC6008F9CAB4083784CBD1874F76618D2A97||
 This hash was cracked using CrackStation.
 
 ### Answer
 ```bash
-password123
+||password123||
 ```
 
-#### 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032
+#### ||1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032||
 This hash was cracked using CrackStation.
 
 ### Answer
 ```bash
-letmein
+||letmein||
 ```
 
 #### $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom
@@ -57,34 +56,34 @@ hashcat -m 3200 -a 0 bcrypt.txt /usr/share/wordlists/rockyou.txt
 
 ### Answer
 ```bash
-bleh
+||bleh||
 ```
 
-#### 279412f945939ba78ce0758d3fd83daa
+#### ||279412f945939ba78ce0758d3fd83daa||
 This hash was cracked using CrackStation.
 
 ### Answer
 ```bash
-Eternity22
+||Eternity22||
 ```
 
 ## 3. Level 2
 Level 2 increases the difficulty. The room notes that all answers are in the classic `rockyou.txt` password list, so Hashcat is useful here.
 
-#### F09EDCB1FCEFC6DFB23DC3505A882655FF77375ED8AA2D1C13F640FCCC2D0C85
+#### ||F09EDCB1FCEFC6DFB23DC3505A882655FF77375ED8AA2D1C13F640FCCC2D0C85||
 This hash was cracked with `rockyou.txt`.
 
 ### Answer
 ```bash
-paule
+||paule||
 ```
 
-#### 1DFECA0C002AE40B8619ECF94819CC1B
+#### ||1DFECA0C002AE40B8619ECF94819CC1B||
 This hash was cracked with `rockyou.txt`.
 
 ### Answer
 ```bash
-n63umy8lkf4i
+||n63umy8lkf4i||
 ```
 
 #### $6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.
@@ -104,10 +103,10 @@ hashcat -m 1800 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
 
 ### Answer
 ```bash
-waka99
+||waka99||
 ```
 
-#### e5d8870e5bdd26602cab8dbe07a942c8669e56d6
+#### ||e5d8870e5bdd26602cab8dbe07a942c8669e56d6||
 This is a salted SHA1 hash using the format `sha1($pass.$salt)`.
 
 ### Hash Details
@@ -119,13 +118,13 @@ Salt: tryhackme
 
 ### Hashcat Command
 ```bash
-echo 'e5d8870e5bdd26602cab8dbe07a942c8669e56d6:tryhackme' > sha1salt.txt
+echo '||e5d8870e5bdd26602cab8dbe07a942c8669e56d6||:tryhackme' > sha1salt.txt
 hashcat -m 110 -a 0 sha1salt.txt /usr/share/wordlists/rockyou.txt
 ```
 
 ### Answer
 ```bash
-481616481616
+||481616481616||
 ```
 
 ## 4. Useful Hashcat Modes

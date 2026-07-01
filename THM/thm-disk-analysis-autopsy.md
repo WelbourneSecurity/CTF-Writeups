@@ -2,9 +2,9 @@
 title: Disk Analysis & Autopsy
 summary: TryHackMe forensic analysis room using Autopsy to investigate a Windows disk image, recover system details, user activity, network artifacts, tools, and flags.
 date: 2026-06-29
+tags: [TryHackMe, Autopsy, Disk Forensics, DFIR, Windows, Registry, Artifacts]
 difficulty: medium
 os: Windows
-tags: [TryHackMe, Autopsy, Disk Forensics, DFIR, Windows, Registry, Artifacts]
 url: https://tryhackme.com/room/autopsy2ze0
 ---
 
@@ -26,7 +26,7 @@ The room provides an RDP-accessible Windows machine with Autopsy and the case fi
 ```bash
 IP: MACHINE_IP
 Username: administrator
-Password: letmein123!
+Password: ||letmein123!||
 ```
 
 After connecting over RDP, I opened the Autopsy case and manually reviewed the discovered artifacts.
@@ -38,7 +38,7 @@ The image hash was found in Autopsy under the file metadata for the E01 data sou
 
 ### Answer
 ```bash
-3f08c518adb3b5c1359849657a9b2079
+||3f08c518adb3b5c1359849657a9b2079||
 ```
 
 #### What is the computer account name?
@@ -143,7 +143,7 @@ Users\shreya\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost
 
 ### Answer
 ```bash
-flag{HarleyQuinnForQueen}
+||flag{HarleyQuinnForQueen}||
 ```
 
 #### The same user found an exploit to escalate privileges on the computer. What was the message to the device owner?
@@ -151,7 +151,7 @@ The message was found in `exploit.ps1` on Shreya's desktop.
 
 ### Answer
 ```bash
-flag{I-hacked-you}
+||flag{I-hacked-you}||
 ```
 
 ## 6. Tools And Malware Artifacts

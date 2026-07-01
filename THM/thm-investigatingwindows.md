@@ -2,9 +2,9 @@
 title: Investigating Windows
 summary: TryHackMe Windows forensics room investigating a previously compromised Windows Server host through RDP, account activity, scheduled tasks, logs, network artifacts, and web shell evidence.
 date: 2026-06-29
+tags: [TryHackMe, Windows, Forensics, Incident Response, Event Logs, Scheduled Tasks]
 difficulty: easy
 os: Windows Server 2016
-tags: [TryHackMe, Windows, Forensics, Incident Response, Event Logs, Scheduled Tasks]
 url: https://tryhackme.com/room/investigatingwindows
 ---
 
@@ -32,14 +32,14 @@ Target name: Windows Forensics-badr
 ### RDP Credentials
 ```bash
 Username: Administrator
-Password: letmein123!
+Password: ||letmein123!||
 ```
 
 The room notes that the machine does not respond to ICMP, so a failed ping does not mean the host is offline.
 
 ### RDP Connection
 ```bash
-xfreerdp /v:10.129.162.90 /u:Administrator /p:'letmein123!' +clipboard /dynamic-resolution
+xfreerdp /v:10.129.162.90 /u:Administrator /p:'||letmein123!||' +clipboard /dynamic-resolution
 ```
 
 ## 3. Investigation Questions

@@ -1,10 +1,10 @@
 ---
 title: [Room Name]
-summary: [One sentence summary for the writeup archive preview.]
+summary: [One or two sentences for the tree and RSS feed.]
 date: YYYY-MM-DD
+tags: [TryHackMe, Web, PrivEsc]
 difficulty: easy
 os: [Linux / Windows / N/A]
-tags: [TryHackMe, Web, PrivEsc]
 url: [URL]
 ---
 
@@ -12,6 +12,7 @@ url: [URL]
 - [Link to room]([URL])
 - **Difficulty:** Easy / Medium / Hard
 - **Category:** [e.g. Web, PrivEsc, Boot2Root, Crypto, Forensics]
+- **OS:** [Linux / Windows / N/A]
 
 ## 1. Brief
 [One or two sentences describing the challenge premise.]
@@ -24,7 +25,7 @@ url: [URL]
 ```bash
 nmap -sV -sC -Pn -p- [target]
 ```
-```
+```text
 [paste output here]
 ```
 
@@ -32,13 +33,13 @@ nmap -sV -sC -Pn -p- [target]
 
 ---
 
-## 3. [Phase — e.g. Enumeration / Exploitation / Foothold]
+## 3. [Phase - e.g. Enumeration / Exploitation / Foothold]
 
 ### [Step name]
 ```bash
 [command]
 ```
-```
+```text
 [output]
 ```
 
@@ -46,13 +47,13 @@ nmap -sV -sC -Pn -p- [target]
 
 ---
 
-## 4. [Phase — e.g. Privilege Escalation]
+## 4. [Phase - e.g. Privilege Escalation]
 
 ### [Step name]
 ```bash
 [command]
 ```
-```
+```text
 [output]
 ```
 
@@ -63,6 +64,11 @@ nmap -sV -sC -Pn -p- [target]
 ## 5. Flags / Proof
 
 | Flag | Value |
-|------|-------|
-| User flag | `[flag]` |
-| Root flag | `[flag]` |
+|:--|:--|
+| User flag | `||[flag]||` |
+| Root flag | `||[flag]||` |
+
+---
+
+## 6. Summary
+[Key learning points, tools used, and what mattered most.]
