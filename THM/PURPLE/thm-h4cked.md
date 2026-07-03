@@ -204,24 +204,7 @@ cat flag.txt
 ||ebcefd66ca4b559d17b440b6e67fd0fd||
 ```
 
-## 6. Answers
-
-- **Service targeted:** `||FTP||`
-- **Brute-force tool:** `||Hydra||`
-- **Username:** `||Jenny||`
-- **Password in PCAP:** `||password123||`
-- **FTP working directory:** `||/var/www/html||`
-- **Backdoor filename:** `||shell.php||`
-- **Shell source URL:** `||http://pentestmonkey.net/tools/php-reverse-shell||`
-- **First command after reverse shell:** `||whoami||`
-- **Hostname:** `||wir3||`
-- **TTY upgrade command:** `||python3 -c 'import pty; pty.spawn("/bin/bash")'||`
-- **Root command:** `||sudo su||`
-- **GitHub project:** `||Reptile||`
-- **Backdoor type:** `||rootkit||`
-- **Root flag:** `||ebcefd66ca4b559d17b440b6e67fd0fd||`
-
-## 7. Summary
+## 6. Summary
 This room is a tidy reminder that PCAPs can hand you the whole intrusion path if the protocol is cleartext. FTP gave away the username, password, working directory, uploaded shell name, and enough of the reverse shell session to replay the attack.
 
 The recovery phase then became a controlled repeat: brute-force the changed FTP password, upload the PHP shell, catch the callback, use `sudo su`, and read the flag from `/root/Reptile`.
