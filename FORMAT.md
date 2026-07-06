@@ -21,6 +21,16 @@ url: https://tryhackme.com/room/...
 - `os` is optional. Use `Linux`, `Windows`, `Windows Server 2016`, or `N/A` where helpful.
 - `url` becomes the `Open on ...` button.
 
+## Hidden Drafts
+
+Use `THM/hidden/` for TryHackMe writeups that are still being drafted.
+
+The website ignores the `hidden` folder, so Markdown files under `THM/hidden/` will not appear on the public site, RSS feed, or sitemap. When a writeup is ready, move it into the correct public folder:
+
+- `THM/BLUE/`
+- `THM/RED/`
+- `THM/PURPLE/`
+
 ## Spoilers
 
 Wrap any flag, password, hash, or answer you do not want fully visible in double pipes:
