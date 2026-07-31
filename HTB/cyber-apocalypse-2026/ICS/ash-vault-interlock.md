@@ -1,3 +1,12 @@
+---
+title: Ash-Vault Interlock
+summary: Drive a Modbus/TCP interlock PLC and its HMI to halt an unstable cycle, force the seal-ready state, and release the checkpoint token from the alarm table.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, ICS]
+difficulty: hard
+os: N/A
+---
+
 # Ash-Vault Interlock (Hard) - OT/ICS Writeup
 
 ## Challenge

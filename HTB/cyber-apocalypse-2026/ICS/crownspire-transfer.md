@@ -1,3 +1,12 @@
+---
+title: Crownspire Transfer
+summary: Use an IEC 60870-5-104 RTU and a captured maintenance session to force an interlocked power transfer and collect the feeder-trip checkpoint token.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, ICS]
+difficulty: medium
+os: N/A
+---
+
 # Crownspire Transfer (Medium) - OT/ICS Writeup
 
 ## Challenge

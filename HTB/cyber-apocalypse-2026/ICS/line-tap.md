@@ -1,3 +1,12 @@
+---
+title: Line Tap
+summary: A forgotten RiverGate PLC still answers over telnet; sign in on old maintenance habits and read back the latest checkpoint token.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, ICS]
+difficulty: easy
+os: N/A
+---
+
 # Line Tap (Easy) - OT/ICS Writeup
 
 ## Challenge

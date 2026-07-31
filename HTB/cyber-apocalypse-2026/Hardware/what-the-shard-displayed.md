@@ -1,3 +1,12 @@
+---
+title: What the Shard Displayed
+summary: Reconstruct a sigrok/PulseView logic-analyzer capture of an embedded display device to recover the image it painted, and the token drawn with it.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, Hardware]
+difficulty: medium
+os: N/A
+---
+
 # What the Shard Displayed (Medium Hardware) - Writeup
 
 ## Challenge

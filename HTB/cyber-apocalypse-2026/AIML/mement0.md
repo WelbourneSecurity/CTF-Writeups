@@ -1,3 +1,12 @@
+---
+title: Mement0
+summary: An offline AI/ML challenge where a scraping agent's CLAUDE.md standing memory and .claude skills are turned against it to recover a rite deleted from the record but kept in the repo's older history.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, AI/ML]
+difficulty: medium
+os: N/A
+---
+
 # Mement0 (AI/ML) - Writeup
 
 ## Challenge

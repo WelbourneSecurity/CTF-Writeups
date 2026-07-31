@@ -1,3 +1,12 @@
+---
+title: Saltlock Drift
+summary: A RollJam-style RF replay on a GateCar RF-433 fob: jam the receiver, sniff two presses, then replay an unused rolling code to unlock and reveal the token.
+date: 2026-07-31
+tags: [Hack The Box, Cyber Apocalypse 2026, Hardware]
+difficulty: easy
+os: N/A
+---
+
 # Saltlock Drift (Easy Hardware) - Writeup
 
 ## Challenge
